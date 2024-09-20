@@ -6,30 +6,25 @@ import { WagmiProvider } from 'wagmi'
 import { arbitrum, mainnet } from 'wagmi/chains'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
-// 0. Setup queryClient
 const queryClient = new QueryClient()
 
-// 1. Your Reown Cloud project ID
 const projectId = import.meta.env.VITE_WALLET_CONNECT_PROJECT_ID
 
-// 2. Create wagmiConfig
-const metadata = {
-  name: 'myWeb3LearnProject',
-  description: 'AppKit Example',
-  url: 'https://reown.com/appkit', // origin must match your domain & subdomain
-  icons: ['https://avatars.githubusercontent.com/u/37784886']
-}
-
 const chains = [mainnet, arbitrum] as const
-const config = defaultWagmiConfig({
+
+const wagmiConfig = defaultWagmiConfig({
   chains,
   projectId,
-  metadata,
+  metadata: {
+    name: 'myWeb3LearnProject',
+    description: 'AppKit Example',
+    url: 'https://reown.com/appkit', // origin must match your domain & subdomain
+    icons: ['https://avatars.githubusercontent.com/u/37784886']
+  },
 })
 
-// 3. Create modal
 createWeb3Modal({
-  wagmiConfig: config,
+  wagmiConfig,
   projectId,
   enableAnalytics: true, // Optional - defaults to your Cloud configuration
   enableOnramp: false // Optional - false as default
@@ -37,7 +32,7 @@ createWeb3Modal({
 
 function App() {
   return (
-    <WagmiProvider config={config}>
+    <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
         <Outlet />
       </QueryClientProvider>
