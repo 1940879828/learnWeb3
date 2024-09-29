@@ -1,21 +1,24 @@
-import {useAccount, useReadContract, useWriteContract} from 'wagmi'
+import {useAccount, useChainId, useReadContract} from 'wagmi'
 import {abi} from '../../abis/Token.json'
-import {useEffect, useState} from "react";
-
-const TokenContract = "0x5fbdb2315678afecb367f032d93f642f64180aa3"
+import {useEffect, useMemo, useState} from "react";
+import {TOKEN_ADDRESSES} from "../../constants/token.ts";
+import {useTokenTransfer} from "../../hook/use-token-transfer.ts";
 
 const TestContracts = () => {
   const {address} = useAccount();
+  const chainId = useChainId()
+  const contractAddress = useMemo(()=>TOKEN_ADDRESSES[chainId],[chainId])
   const [currentBalance, setCurrentBalance] = useState("");
   const [recipient, setRecipient] = useState("");
   const [amount, setAmount] = useState("");
+  const {data: hash, isPending, executeTransfer} = useTokenTransfer()
 
   // 读取余额
   const {data} = useReadContract({
     abi,
     functionName: 'balanceOf',
     args: [address],
-    address: TokenContract,
+    address: contractAddress,
   });
 
   useEffect(() => {
@@ -24,8 +27,6 @@ const TestContracts = () => {
     }
   }, [data]);
 
-  // 调用 transfer 函数
-  const {data: hash, isPending, writeContract} = useWriteContract();
 
   const handleTransfer = async () => {
     if (!recipient || !amount) {
@@ -34,12 +35,7 @@ const TestContracts = () => {
     }
 
     try {
-      writeContract({
-        address: TokenContract,
-        abi,
-        functionName: 'transfer',
-        args: [recipient, amount],
-      })
+      await executeTransfer({recipient, amount})
     } catch (error) {
       console.log(`交易失败: ${error}`);
     }

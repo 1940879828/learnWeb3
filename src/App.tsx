@@ -11,7 +11,7 @@ const queryClient = new QueryClient()
 const projectId = import.meta.env.VITE_WALLET_CONNECT_PROJECT_ID
 
 // Define my local chain
-const localChain: Chain = {
+export const localChain: Chain = {
   id: 31337, // 本地链的 ID
   name: 'Hardhat-Localhost', // 人类可读的名称
   nativeCurrency: {
