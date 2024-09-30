@@ -1,7 +1,7 @@
 import {useChainId, useWriteContract} from "wagmi";
 import {useCallback, useMemo} from "react";
 import {TOKEN_ADDRESSES} from "../constants/token.ts";
-import {abi} from '../abis/Token.json'
+import {abi} from '../contracts/abis/Token.json'
 
 export const useTokenTransfer = () => {
   const {writeContract, ...others} = useWriteContract()
