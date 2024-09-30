@@ -3,6 +3,7 @@ import {useAccount, useAccountEffect, useBlockNumber, useDisconnect, useSwitchCh
 import {getTokenPrice} from "../utils/utils.ts";
 import {useEffect, useState} from "react";
 import TestContracts from "../components/TestContracts";
+import Popover from "../components/Popover";
 
 function Home() {
   const {open} = useWeb3Modal();
@@ -75,6 +76,15 @@ function Home() {
         </div>
         <hr className="text-gray-100 w-full" title="contract operation"/>
         <TestContracts />
+
+        {/*test Popover*/}
+        <Popover overlay={
+          <div className="p-4 bg-cyan-300">this is overlay</div>
+        }>
+          <div className="w-[100px] h-[100px] flex items-center justify-center bg-lime-500">test Popover</div>
+        </Popover>
+
+        <div className="bg-red-950 fixed left-[500px] top-[479px]">123</div>
       </div>
     </div>
   )
