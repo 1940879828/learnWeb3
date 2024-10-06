@@ -4,6 +4,7 @@ import {getTokenPrice} from "../utils/utils.ts";
 import {useEffect, useState} from "react";
 import TestContracts from "../components/TestContracts";
 import Popover from "../components/Popover";
+import TestContracts2 from "../components/TestContracts2";
 
 function Home() {
   const {open} = useWeb3Modal();
@@ -12,7 +13,7 @@ function Home() {
   const { data: latestBlock } = useBlockNumber({ chainId:chain?.id, watch: true })
   const { chains, switchChain } = useSwitchChain()
   const [tokenPrice, setTokenPrice] = useState<string>("")
-
+  console.log(chain)
   const getPrice = async () => {
     const result = await getTokenPrice()
     setTokenPrice(result)
@@ -76,6 +77,7 @@ function Home() {
         </div>
         <hr className="text-gray-100 w-full" title="contract operation"/>
         <TestContracts />
+        <TestContracts2 />
 
         {/*test Popover*/}
         <Popover overlay={
@@ -84,7 +86,6 @@ function Home() {
           <div className="w-[100px] h-[100px] flex items-center justify-center bg-lime-500">test Popover</div>
         </Popover>
 
-        <div className="bg-red-950 fixed left-[500px] top-[479px]">123</div>
       </div>
     </div>
   )
