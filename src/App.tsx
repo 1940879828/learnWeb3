@@ -3,7 +3,7 @@ import {Outlet} from "react-router-dom";
 import { createWeb3Modal } from '@web3modal/wagmi/react'
 import { defaultWagmiConfig } from '@web3modal/wagmi/react/config'
 import { WagmiProvider } from 'wagmi'
-import {arbitrum, Chain, mainnet, sepolia} from 'wagmi/chains'
+import {arbitrum, Chain, mainnet, mantleTestnet, scrollSepolia, sepolia} from 'wagmi/chains'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const queryClient = new QueryClient()
@@ -27,7 +27,7 @@ export const localChain: Chain = {
   testnet: true, // 标记为测试网络
 };
 
-const chains = [mainnet, arbitrum, sepolia, localChain] as const
+const chains = [mainnet, arbitrum, sepolia, localChain, scrollSepolia, mantleTestnet] as const
 
 const wagmiConfig = defaultWagmiConfig({
   chains,

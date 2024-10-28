@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import TestContracts from "../components/TestContracts";
 import Popover from "../components/Popover";
 import TestContracts2 from "../components/TestContracts2";
+import TextContext from "../components/TextContext";
 
 function Home() {
   const {open} = useWeb3Modal();
@@ -86,6 +87,8 @@ function Home() {
           <div className="w-[100px] h-[100px] flex items-center justify-center bg-lime-500">test Popover</div>
         </Popover>
 
+        {/*<TestContracts3 />*/}
+        <TextContext />
       </div>
     </div>
   )
